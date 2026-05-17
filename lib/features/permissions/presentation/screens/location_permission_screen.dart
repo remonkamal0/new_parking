@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:test888/core/widgets/custom_app_bar.dart';
 import 'package:test888/core/widgets/custom_button.dart';
 import 'package:test888/generated/l10n/app_localizations.dart';
@@ -58,8 +59,12 @@ class LocationPermissionScreen extends StatelessWidget {
             Spacer(),
             CustomButton(
               text: l10n.continueBtn.toUpperCase(),
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.enterDeviceDetails);
+              onPressed: () async {
+                await Permission.locationWhenInUse.request();
+                
+                if (context.mounted) {
+                  Navigator.pushNamed(context, AppRoutes.enterDeviceDetails);
+                }
               },
             ),
             TextButton(

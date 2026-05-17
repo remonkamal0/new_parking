@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:test888/core/widgets/custom_app_bar.dart';
 import 'package:test888/core/widgets/custom_button.dart';
 import 'package:test888/generated/l10n/app_localizations.dart';
@@ -57,8 +60,30 @@ class BluetoothPermissionScreen extends StatelessWidget {
             Spacer(),
             CustomButton(
               text: l10n.continueBtn.toUpperCase(),
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.locationPermission);
+              onPressed: () async {
+                if (Platform.isAndroid) {
+                  await [
+                    Permission.bluetoothScan,
+                    Permission.bluetoothConnect,
+                  ].request();
+
+                  try {
+                    await FlutterBluePlus.turnOn();
+                  } catch (e) {
+                    debugPrint('Error turning on Bluetooth: $e');
+                    if (context.mounted) {
+                       ScaffoldMessenger.of(context).showSnackBar(
+                         SnackBar(content: Text('Error: $e. Did you completely restart the app?')),
+                       );
+                    }
+                  }
+                } else if (Platform.isIOS) {
+                  await Permission.bluetooth.request();
+                }
+
+                if (context.mounted) {
+                  Navigator.pushNamed(context, AppRoutes.locationPermission);
+                }
               },
             ),
             TextButton(
