@@ -45,6 +45,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get home => 'الرئيسية';
 
   @override
+  String get devices => 'الأجهزة';
+
+  @override
   String get shop => 'المتجر';
 
   @override

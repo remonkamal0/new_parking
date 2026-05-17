@@ -5,6 +5,7 @@ import 'package:test888/features/auth/presentation/screens/login_screen.dart';
 import 'package:test888/features/auth/presentation/screens/splash_screen.dart';
 import 'package:test888/features/auth/presentation/screens/verification_screen.dart';
 import 'package:test888/features/device/presentation/screens/add_device_screen.dart';
+import 'package:test888/features/device/presentation/screens/devices_screen.dart';
 import 'package:test888/features/device/presentation/screens/device_detail_screen.dart';
 import 'package:test888/features/device/presentation/screens/enter_device_details_screen.dart';
 import 'package:test888/features/device/presentation/screens/qr_scan_screen.dart';
@@ -56,6 +57,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LanguageScreen());
       case AppRoutes.support:
         return MaterialPageRoute(builder: (_) => const SupportScreen());
+      case AppRoutes.devices:
+        return MaterialPageRoute(builder: (_) => const DevicesScreen());
       case AppRoutes.deviceDetail:
         final device = settings.arguments;
         if (device is DeviceModel) {

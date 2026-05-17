@@ -14,114 +14,127 @@ class LanguageSelectionScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.primaryColor,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // App Logo/Title
-              Container(
-                width: 120.w,
-                height: 120.w,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
                 ),
-                child: Center(
-                  child: Text(
-                    'P',
-                    style: TextStyle(
-                      fontSize: 48.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.primaryColor,
+                child: IntrinsicHeight(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 40.h),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // App Logo/Title
+                        Container(
+                          width: 120.w,
+                          height: 120.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30.r),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              'P',
+                              style: TextStyle(
+                                fontSize: 48.sp,
+                                fontWeight: FontWeight.bold,
+                                color: AppTheme.primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        
+                        SizedBox(height: 60.h),
+                        
+                        // Welcome Text
+                        Text(
+                          'Welcome to Parky',
+                          style: TextStyle(
+                            fontSize: 28.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        
+                        SizedBox(height: 16.h),
+                        
+                        Text(
+                          'Choose your preferred language',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.white.withOpacity(0.9),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        
+                        SizedBox(height: 60.h),
+                        
+                        // Language Selection Cards
+                        _buildLanguageCard(
+                          context,
+                          title: 'English',
+                          subtitle: 'English',
+                          flag: '🇺🇸',
+                          isSelected: context.watch<AppLanguageProvider>().locale.languageCode == 'en',
+                          onTap: () => _selectLanguage(context, 'en'),
+                        ),
+                        
+                        SizedBox(height: 20.h),
+                        
+                        _buildLanguageCard(
+                          context,
+                          title: 'العربية',
+                          subtitle: 'Arabic',
+                          flag: '🇸🇦',
+                          isSelected: context.watch<AppLanguageProvider>().locale.languageCode == 'ar',
+                          onTap: () => _selectLanguage(context, 'ar'),
+                        ),
+                        
+                        const Spacer(),
+                        
+                        // Continue Button
+                        SizedBox(
+                          width: double.infinity,
+                          height: 56.h,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(context, AppRoutes.login);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: AppTheme.primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.r),
+                              ),
+                              elevation: 8,
+                            ),
+                            child: Text(
+                              'Continue',
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-              
-              SizedBox(height: 60.h),
-              
-              // Welcome Text
-              Text(
-                'Welcome to Parky',
-                style: TextStyle(
-                  fontSize: 28.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              
-              SizedBox(height: 16.h),
-              
-              Text(
-                'Choose your preferred language',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: Colors.white.withOpacity(0.9),
-                ),
-                textAlign: TextAlign.center,
-              ),
-              
-              SizedBox(height: 60.h),
-              
-              // Language Selection Cards
-              _buildLanguageCard(
-                context,
-                title: 'English',
-                subtitle: 'English',
-                flag: '🇺🇸',
-                isSelected: context.watch<AppLanguageProvider>().locale.languageCode == 'en',
-                onTap: () => _selectLanguage(context, 'en'),
-              ),
-              
-              SizedBox(height: 20.h),
-              
-              _buildLanguageCard(
-                context,
-                title: 'العربية',
-                subtitle: 'Arabic',
-                flag: '🇸🇦',
-                isSelected: context.watch<AppLanguageProvider>().locale.languageCode == 'ar',
-                onTap: () => _selectLanguage(context, 'ar'),
-              ),
-              
-              const Spacer(),
-              
-              // Continue Button
-              SizedBox(
-                width: double.infinity,
-                height: 56.h,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, AppRoutes.login);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: AppTheme.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.r),
-                    ),
-                    elevation: 8,
-                  ),
-                  child: Text(
-                    'Continue',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -207,12 +207,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                     ),
-                                    IconButton(
-                                      icon: Icon(Icons.edit_outlined, color: Theme.of(context).primaryColor, size: 20.sp),
-                                      onPressed: () {
-                                        Navigator.pop(ctx);
-                                        _showEditDialog(context, device);
-                                      },
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(Icons.edit_outlined, color: Theme.of(context).primaryColor, size: 20.sp),
+                                          onPressed: () {
+                                            Navigator.pop(ctx);
+                                            _showEditDialog(context, device);
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.delete_outline, color: Colors.redAccent, size: 20.sp),
+                                          onPressed: () {
+                                            Navigator.pop(ctx);
+                                            _showDeleteConfirmationDialog(context, device);
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -314,6 +326,35 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           },
+        );
+      },
+    );
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context, DeviceModel device) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: const Text('Delete Device'),
+          content: Text('Are you sure you want to delete "' + device.name + '"?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () {
+                context.read<DeviceProvider>().removeDevice(device.id);
+                Navigator.pop(ctx);
+              },
+              child: const Text('Delete'),
+            ),
+          ],
         );
       },
     );

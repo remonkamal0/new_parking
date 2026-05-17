@@ -170,6 +170,12 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get home;
 
+  /// No description provided for @devices.
+  ///
+  /// In en, this message translates to:
+  /// **'Devices'**
+  String get devices;
+
   /// No description provided for @shop.
   ///
   /// In en, this message translates to:

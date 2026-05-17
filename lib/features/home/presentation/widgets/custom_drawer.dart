@@ -64,10 +64,10 @@ class CustomDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(Icons.devices, color: theme.primaryColor),
-                  title: Text('Devices'),
+                  title: Text(l10n.devices),
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushNamed(context, AppRoutes.home);
+                    Navigator.pushNamed(context, AppRoutes.devices);
                   },
                 ),
                 ListTile(
