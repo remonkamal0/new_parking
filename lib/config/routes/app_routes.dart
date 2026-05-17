@@ -15,4 +15,5 @@ class AppRoutes {
   static const String profileDetails = '/profile_details';
   static const String language = '/language';
   static const String support = '/support';
+  static const String deviceDetail = '/device_detail';
 }

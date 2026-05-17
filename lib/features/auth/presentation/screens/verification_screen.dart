@@ -72,7 +72,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  AppRoutes.home,
+                  AppRoutes.bluetoothPermission,
                   (route) => false,
                 );
               },
@@ -210,7 +210,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         if (_currentOtp.length == widget.otpLength) {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            AppRoutes.home,
+                            AppRoutes.bluetoothPermission,
                             (route) => false,
                           );
                         } else {

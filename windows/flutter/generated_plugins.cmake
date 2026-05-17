@@ -3,6 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  flutter_blue_plus_winrt
+  geolocator_windows
   local_auth_windows
   permission_handler_windows
 )

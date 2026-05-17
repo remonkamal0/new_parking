@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:test888/core/theme/app_theme.dart';
 import 'package:test888/core/providers/app_language_provider.dart';
 import 'package:test888/core/providers/app_theme_provider.dart';
+import 'package:test888/core/providers/device_provider.dart';
 import 'package:test888/generated/l10n/app_localizations.dart';
 import 'package:test888/config/routes/app_routes.dart';
 import 'package:test888/config/routes/app_router.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
 
   final themeProvider = AppThemeProvider();
   final languageProvider = AppLanguageProvider();
+  final deviceProvider = DeviceProvider();
   await Future.wait([
     themeProvider.load(),
     languageProvider.load(),
@@ -24,6 +26,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider.value(value: themeProvider),
         ChangeNotifierProvider.value(value: languageProvider),
+        ChangeNotifierProvider.value(value: deviceProvider),
       ],
       child: const MyApp(),
     ),

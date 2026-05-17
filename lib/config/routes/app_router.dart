@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:test888/config/routes/app_routes.dart';
+import 'package:test888/core/models/device_model.dart';
 import 'package:test888/features/auth/presentation/screens/login_screen.dart';
 import 'package:test888/features/auth/presentation/screens/splash_screen.dart';
 import 'package:test888/features/auth/presentation/screens/verification_screen.dart';
 import 'package:test888/features/device/presentation/screens/add_device_screen.dart';
+import 'package:test888/features/device/presentation/screens/device_detail_screen.dart';
 import 'package:test888/features/device/presentation/screens/enter_device_details_screen.dart';
 import 'package:test888/features/device/presentation/screens/qr_scan_screen.dart';
 import 'package:test888/features/home/presentation/screens/home_screen.dart';
@@ -35,9 +37,11 @@ class AppRouter {
       case AppRoutes.map:
         return MaterialPageRoute(builder: (_) => const MapScreen());
       case AppRoutes.bluetoothPermission:
-        return MaterialPageRoute(builder: (_) => const BluetoothPermissionScreen());
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(builder: (_) => BluetoothPermissionScreen(nextRoute: args?['nextRoute']));
       case AppRoutes.locationPermission:
-        return MaterialPageRoute(builder: (_) => const LocationPermissionScreen());
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(builder: (_) => LocationPermissionScreen(nextRoute: args?['nextRoute']));
       case AppRoutes.qrScan:
         return MaterialPageRoute(builder: (_) => const QrScanScreen());
       case AppRoutes.scanToPark:
@@ -52,6 +56,14 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LanguageScreen());
       case AppRoutes.support:
         return MaterialPageRoute(builder: (_) => const SupportScreen());
+      case AppRoutes.deviceDetail:
+        final device = settings.arguments;
+        if (device is DeviceModel) {
+          return MaterialPageRoute(
+            builder: (_) => DeviceDetailScreen(device: device),
+          );
+        }
+        return null;
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

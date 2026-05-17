@@ -9,7 +9,9 @@ import 'package:test888/generated/l10n/app_localizations.dart';
 import 'package:test888/config/routes/app_routes.dart';
 
 class BluetoothPermissionScreen extends StatelessWidget {
-  const BluetoothPermissionScreen({super.key});
+  final String? nextRoute;
+
+  const BluetoothPermissionScreen({super.key, this.nextRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -82,12 +84,20 @@ class BluetoothPermissionScreen extends StatelessWidget {
                 }
 
                 if (context.mounted) {
-                  Navigator.pushNamed(context, AppRoutes.locationPermission);
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.locationPermission,
+                    arguments: {'nextRoute': nextRoute},
+                  );
                 }
               },
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                if (nextRoute != null) {
+                  Navigator.pushReplacementNamed(context, nextRoute!);
+                }
+              },
               child: Text(
                 l10n.maybeLater,
                 style: TextStyle(color: Colors.grey),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test888/core/widgets/custom_app_bar.dart';
 import 'package:test888/core/widgets/custom_button.dart';
 import 'package:test888/generated/l10n/app_localizations.dart';
@@ -8,7 +9,9 @@ import 'package:test888/config/routes/app_routes.dart';
 
 // Very similar to Bluetooth, could refactor into a Generic Permission Screen
 class LocationPermissionScreen extends StatelessWidget {
-  const LocationPermissionScreen({super.key});
+  final String? nextRoute;
+
+  const LocationPermissionScreen({super.key, this.nextRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +64,36 @@ class LocationPermissionScreen extends StatelessWidget {
               text: l10n.continueBtn.toUpperCase(),
               onPressed: () async {
                 await Permission.locationWhenInUse.request();
-                
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setBool('onboarding_complete', true);
                 if (context.mounted) {
-                  Navigator.pushNamed(context, AppRoutes.enterDeviceDetails);
+                  if (nextRoute != null) {
+                    Navigator.of(context).pushReplacementNamed(nextRoute!);
+                  } else {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.home,
+                      (route) => false,
+                    );
+                  }
                 }
               },
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () async {
+                // Skip but still mark onboarding complete
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.setBool('onboarding_complete', true);
+                if (context.mounted) {
+                  if (nextRoute != null) {
+                    Navigator.of(context).pushReplacementNamed(nextRoute!);
+                  } else {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.home,
+                      (route) => false,
+                    );
+                  }
+                }
+              },
               child: Text(
                 l10n.maybeLater,
                 style: TextStyle(color: Colors.grey),

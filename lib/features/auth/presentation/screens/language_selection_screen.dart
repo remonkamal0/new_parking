@@ -200,6 +200,6 @@ class LanguageSelectionScreen extends StatelessWidget {
 
   void _selectLanguage(BuildContext context, String languageCode) {
     final languageProvider = context.read<AppLanguageProvider>();
-    languageProvider.changeLanguage(Locale(languageCode));
+    languageProvider.setLocale(Locale(languageCode));
   }
 }
