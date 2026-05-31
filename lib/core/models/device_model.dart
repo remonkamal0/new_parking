@@ -37,4 +37,28 @@ class DeviceModel {
       lng: lng ?? this.lng,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'location': location,
+      'serialNumber': serialNumber,
+      'type': type,
+      'lat': lat,
+      'lng': lng,
+    };
+  }
+
+  factory DeviceModel.fromJson(Map<String, dynamic> json) {
+    return DeviceModel(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      location: json['location'] as String,
+      serialNumber: json['serialNumber'] as String,
+      type: json['type'] as String,
+      lat: json['lat'] != null ? (json['lat'] as num).toDouble() : null,
+      lng: json['lng'] != null ? (json['lng'] as num).toDouble() : null,
+    );
+  }
 }

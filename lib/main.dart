@@ -19,6 +19,7 @@ Future<void> main() async {
   await Future.wait([
     themeProvider.load(),
     languageProvider.load(),
+    deviceProvider.load(),
   ]);
 
   runApp(
